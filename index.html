@@ -704,7 +704,7 @@ const PIN_HASH_KEY  = 'ndp_amb_pin_hash';
 const SB_URL_KEY    = 'ndp_amb_sb_url';
 const SB_KEY_KEY    = 'ndp_amb_sb_key';
 
-let supabase = null;
+let sbClient = null;
 let ambulances = [];
 let selectedId = null;
 let filterStatus = 'ALL';
@@ -800,14 +800,14 @@ function initApp() {
 }
 
 function connectSupabase(url, key) {
-  supabase = window.supabase.createClient(url, key);
+  sbClient = window.supabase.createClient(url, key);
   fetchAmbulances();
   subscribeRealtime();
 }
 
 // ── DATA ──
 async function fetchAmbulances() {
-  const { data, error } = await supabase
+  const { data, error } = await sbClient
     .from('ambulances')
     .select('*')
     .order('id');
@@ -818,8 +818,8 @@ async function fetchAmbulances() {
 }
 
 function subscribeRealtime() {
-  if (realtimeChannel) supabase.removeChannel(realtimeChannel);
-  realtimeChannel = supabase
+  if (realtimeChannel) sbClient.removeChannel(realtimeChannel);
+  realtimeChannel = sbClient
     .channel('ambulances-changes')
     .on('postgres_changes', { event: '*', schema: 'public', table: 'ambulances' }, () => {
       fetchAmbulances();
@@ -970,7 +970,7 @@ async function saveAmb(id) {
   const notes   = document.getElementById('f-notes').value.trim();
   const patient_on_board = readPob();
 
-  const { error } = await supabase
+  const { error } = await sbClient
     .from('ambulances')
     .update({ status, location, destination, notes, patient_on_board, updated_at: new Date().toISOString() })
     .eq('id', id);
@@ -989,7 +989,7 @@ function clearSelection() {
 
 async function confirmDelete(id) {
   if (!confirm(`Remove ${id} from tracker?`)) return;
-  const { error } = await supabase.from('ambulances').delete().eq('id', id);
+  const { error } = await sbClient.from('ambulances').delete().eq('id', id);
   if (error) { showToast('Delete failed: ' + error.message); return; }
   showToast(`${id} removed.`);
   clearSelection();
@@ -1006,7 +1006,7 @@ async function addAmbulance() {
   if (!id) { showToast('Enter an ambulance ID.'); return; }
   if (ambulances.find(a => a.id === id)) { showToast(`${id} already exists.`); return; }
 
-  const { error } = await supabase.from('ambulances').insert([{
+  const { error } = await sbClient.from('ambulances').insert([{
     id, location: loc, status: 'AVAILABLE',
     patient_on_board: false, destination: '', notes: '',
     updated_at: new Date().toISOString()
