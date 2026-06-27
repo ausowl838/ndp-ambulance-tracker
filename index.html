@@ -13,9 +13,8 @@
     --border-hi: #2a3545;
     --text:      #c8d4e0;
     --dim:       #556070;
-    --accent:    #f59e0b;   /* amber — ambulance signal yellow */
+    --accent:    #f59e0b;
     --accent-dim:#7c4f0a;
-
     --avail:     #22c55e;
     --avail-bg:  #052010;
     --deploy:    #f59e0b;
@@ -24,506 +23,120 @@
     --hosp-bg:   #1a0505;
     --rtb:       #60a5fa;
     --rtb-bg:    #051020;
-
-    --col-w: 320px;
   }
-
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Mono', monospace; font-size: 13px; min-height: 100vh; }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Mono', monospace;
-    font-size: 13px;
-    min-height: 100vh;
-  }
-
-  /* ── HEADER ── */
-  header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px 24px;
-    border-bottom: 1px solid var(--border);
-    background: var(--surface);
-    position: sticky; top: 0; z-index: 100;
-  }
-
+  /* HEADER */
+  header { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; border-bottom: 1px solid var(--border); background: var(--surface); position: sticky; top: 0; z-index: 100; }
   .header-left { display: flex; align-items: center; gap: 16px; }
-
-  .badge-restrict {
-    font-family: 'Syne', sans-serif;
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    color: var(--accent);
-    border: 1px solid var(--accent-dim);
-    padding: 3px 8px;
-    border-radius: 2px;
-    text-transform: uppercase;
-  }
-
-  h1 {
-    font-family: 'Syne', sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-    color: #fff;
-    letter-spacing: 0.04em;
-  }
+  .badge-restrict { font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 0.12em; color: var(--accent); border: 1px solid var(--accent-dim); padding: 3px 8px; border-radius: 2px; text-transform: uppercase; }
+  h1 { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; color: #fff; letter-spacing: 0.04em; }
   h1 span { color: var(--accent); }
-
   .header-right { display: flex; align-items: center; gap: 20px; }
-
-  #clock {
-    font-family: 'DM Mono', monospace;
-    font-size: 20px;
-    font-weight: 500;
-    color: #fff;
-    letter-spacing: 0.06em;
-  }
-
-  .live-dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: var(--avail);
-    animation: pulse 2s infinite;
-    display: inline-block;
-    margin-right: 6px;
-  }
+  #clock { font-family: 'DM Mono', monospace; font-size: 20px; font-weight: 500; color: #fff; letter-spacing: 0.06em; }
+  .live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--avail); animation: pulse 2s infinite; display: inline-block; margin-right: 6px; }
   @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
 
-  /* ── SUMMARY BAR ── */
-  .summary-bar {
-    display: flex;
-    gap: 0;
-    border-bottom: 1px solid var(--border);
-    background: var(--surface);
-    padding: 0 24px;
-  }
-
-  .stat-pill {
-    display: flex; align-items: center; gap: 10px;
-    padding: 10px 20px;
-    border-right: 1px solid var(--border);
-  }
+  /* SUMMARY */
+  .summary-bar { display: flex; border-bottom: 1px solid var(--border); background: var(--surface); padding: 0 24px; }
+  .stat-pill { display: flex; align-items: center; gap: 10px; padding: 10px 20px; border-right: 1px solid var(--border); }
   .stat-pill:first-child { padding-left: 0; }
-
-  .stat-count {
-    font-family: 'Syne', sans-serif;
-    font-size: 22px;
-    font-weight: 800;
-    line-height: 1;
-  }
-  .stat-label {
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--dim);
-    line-height: 1.4;
-  }
-
-  .s-avail  .stat-count { color: var(--avail); }
+  .stat-count { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; line-height: 1; }
+  .stat-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); line-height: 1.4; }
+  .s-avail .stat-count  { color: var(--avail); }
   .s-deploy .stat-count { color: var(--deploy); }
-  .s-hosp   .stat-count { color: var(--hosp); }
-  .s-rtb    .stat-count { color: var(--rtb); }
-  .s-total  .stat-count { color: #fff; }
+  .s-hosp .stat-count   { color: var(--hosp); }
+  .s-rtb .stat-count    { color: var(--rtb); }
+  .s-total .stat-count  { color: #fff; }
 
-  /* ── MAIN LAYOUT ── */
-  .main {
-    display: flex;
-    height: calc(100vh - 103px);
-    overflow: hidden;
-  }
+  /* MAIN */
+  .main { display: flex; height: calc(100vh - 103px); overflow: hidden; }
 
-  /* ── LEFT PANEL: AMB LIST ── */
-  .panel-left {
-    width: 440px;
-    min-width: 440px;
-    border-right: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-
-  .panel-header {
-    padding: 12px 16px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: var(--surface);
-  }
-
-  .panel-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--dim);
-  }
-
-  .filter-row {
-    display: flex; gap: 6px;
-  }
-
-  .filter-btn {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    padding: 4px 10px;
-    border-radius: 2px;
-    border: 1px solid var(--border-hi);
-    background: transparent;
-    color: var(--dim);
-    cursor: pointer;
-    letter-spacing: 0.06em;
-    transition: all 0.15s;
-  }
+  /* LEFT PANEL */
+  .panel-left { width: 440px; min-width: 440px; border-right: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; }
+  .panel-header { padding: 12px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; background: var(--surface); }
+  .panel-title { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); }
+  .filter-row { display: flex; gap: 6px; }
+  .filter-btn { font-family: 'DM Mono', monospace; font-size: 10px; padding: 4px 10px; border-radius: 2px; border: 1px solid var(--border-hi); background: transparent; color: var(--dim); cursor: pointer; letter-spacing: 0.06em; transition: all 0.15s; }
   .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
   .filter-btn.active { background: var(--accent); border-color: var(--accent); color: #000; font-weight: 500; }
-
-  .amb-list {
-    overflow-y: auto;
-    flex: 1;
-  }
+  .amb-list { overflow-y: auto; flex: 1; }
   .amb-list::-webkit-scrollbar { width: 4px; }
-  .amb-list::-webkit-scrollbar-track { background: transparent; }
   .amb-list::-webkit-scrollbar-thumb { background: var(--border-hi); border-radius: 2px; }
-
-  .amb-card {
-    padding: 12px 16px;
-    border-bottom: 1px solid var(--border);
-    cursor: pointer;
-    transition: background 0.12s;
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-  }
+  .amb-card { padding: 12px 16px; border-bottom: 1px solid var(--border); cursor: pointer; transition: background 0.12s; display: flex; align-items: flex-start; gap: 12px; }
   .amb-card:hover { background: #13181f; }
   .amb-card.selected { background: #161d28; border-left: 3px solid var(--accent); }
-
-  .amb-id {
-    font-family: 'Syne', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    color: #fff;
-    min-width: 56px;
-  }
-
+  .amb-id { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; color: #fff; min-width: 56px; }
   .amb-details { flex: 1; }
-
-  .amb-location {
-    font-size: 12px;
-    color: var(--text);
-    margin-bottom: 4px;
-  }
-
-  .amb-meta {
-    display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
-  }
-
-  .status-chip {
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 2px 8px;
-    border-radius: 2px;
-  }
-
-  .chip-AVAILABLE  { background: var(--avail-bg);  color: var(--avail);  border: 1px solid var(--avail); }
-  .chip-DEPLOYED   { background: var(--deploy-bg); color: var(--deploy); border: 1px solid var(--deploy); }
-  .chip-AT_HOSP    { background: var(--hosp-bg);   color: var(--hosp);   border: 1px solid var(--hosp); }
-  .chip-RTB        { background: var(--rtb-bg);     color: var(--rtb);    border: 1px solid var(--rtb); }
-
-  .amb-pob {
-    font-size: 10px;
-    color: var(--hosp);
-    letter-spacing: 0.06em;
-  }
+  .amb-location { font-size: 12px; color: var(--text); margin-bottom: 4px; }
+  .amb-meta { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .status-chip { font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 8px; border-radius: 2px; }
+  .chip-AVAILABLE { background: var(--avail-bg);  color: var(--avail);  border: 1px solid var(--avail); }
+  .chip-DEPLOYED  { background: var(--deploy-bg); color: var(--deploy); border: 1px solid var(--deploy); }
+  .chip-AT_HOSP   { background: var(--hosp-bg);   color: var(--hosp);   border: 1px solid var(--hosp); }
+  .chip-RTB       { background: var(--rtb-bg);    color: var(--rtb);    border: 1px solid var(--rtb); }
+  .amb-pob { font-size: 10px; color: var(--hosp); letter-spacing: 0.06em; }
   .amb-pob.none { color: var(--dim); }
+  .amb-ts { font-size: 10px; color: var(--dim); margin-left: auto; white-space: nowrap; }
 
-  .amb-ts {
-    font-size: 10px;
-    color: var(--dim);
-    margin-left: auto;
-    white-space: nowrap;
-  }
-
-  /* ── RIGHT PANEL: DETAIL / EDIT ── */
-  .panel-right {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-
-  .detail-pane {
-    flex: 1;
-    overflow-y: auto;
-    padding: 24px;
-  }
+  /* RIGHT PANEL */
+  .panel-right { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+  .detail-pane { flex: 1; overflow-y: auto; padding: 24px; }
   .detail-pane::-webkit-scrollbar { width: 4px; }
   .detail-pane::-webkit-scrollbar-thumb { background: var(--border-hi); }
-
-  .detail-empty {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    color: var(--dim);
-    gap: 8px;
-  }
-  .detail-empty svg { opacity: 0.2; }
+  .detail-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: var(--dim); gap: 8px; }
   .detail-empty p { font-size: 12px; letter-spacing: 0.06em; }
-
-  /* Edit form */
   .edit-form { max-width: 560px; }
-
-  .form-heading {
-    font-family: 'Syne', sans-serif;
-    font-size: 20px;
-    font-weight: 800;
-    color: #fff;
-    margin-bottom: 4px;
-  }
-  .form-sub {
-    font-size: 11px;
-    color: var(--dim);
-    margin-bottom: 28px;
-    letter-spacing: 0.06em;
-  }
-
-  .form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-bottom: 16px;
-  }
+  .form-heading { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800; color: #fff; margin-bottom: 4px; }
+  .form-sub { font-size: 11px; color: var(--dim); margin-bottom: 28px; letter-spacing: 0.06em; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
   .form-group { display: flex; flex-direction: column; gap: 6px; }
   .form-group.full { grid-column: 1 / -1; }
-
-  label {
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--dim);
-    font-weight: 500;
-  }
-
-  select, input[type="text"] {
-    background: var(--surface);
-    border: 1px solid var(--border-hi);
-    color: var(--text);
-    font-family: 'DM Mono', monospace;
-    font-size: 13px;
-    padding: 9px 12px;
-    border-radius: 3px;
-    outline: none;
-    transition: border-color 0.15s;
-    width: 100%;
-  }
-  select:focus, input[type="text"]:focus { border-color: var(--accent); }
+  label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); font-weight: 500; }
+  select, input[type="text"], input[type="password"] { background: var(--surface); border: 1px solid var(--border-hi); color: var(--text); font-family: 'DM Mono', monospace; font-size: 13px; padding: 9px 12px; border-radius: 3px; outline: none; transition: border-color 0.15s; width: 100%; }
+  select:focus, input:focus { border-color: var(--accent); }
   select option { background: var(--surface); }
-
-  .pob-toggle {
-    display: flex; gap: 10px;
-  }
-  .pob-btn {
-    flex: 1;
-    padding: 9px 12px;
-    border-radius: 3px;
-    border: 1px solid var(--border-hi);
-    background: transparent;
-    color: var(--dim);
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    cursor: pointer;
-    transition: all 0.15s;
-    letter-spacing: 0.04em;
-  }
+  .pob-toggle { display: flex; gap: 10px; }
+  .pob-btn { flex: 1; padding: 9px 12px; border-radius: 3px; border: 1px solid var(--border-hi); background: transparent; color: var(--dim); font-family: 'DM Mono', monospace; font-size: 12px; cursor: pointer; transition: all 0.15s; }
   .pob-btn.yes.active { background: var(--hosp-bg); border-color: var(--hosp); color: var(--hosp); }
   .pob-btn.no.active  { background: var(--avail-bg); border-color: var(--avail); color: var(--avail); }
-  .pob-btn:hover { border-color: var(--accent); }
-
-  .form-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 24px;
-    padding-top: 20px;
-    border-top: 1px solid var(--border);
-  }
-
-  .btn-save {
-    background: var(--accent);
-    color: #000;
-    border: none;
-    font-family: 'Syne', sans-serif;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 10px 24px;
-    border-radius: 3px;
-    cursor: pointer;
-    transition: opacity 0.15s;
-  }
+  .form-actions { display: flex; gap: 10px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border); }
+  .btn-save { background: var(--accent); color: #000; border: none; font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 10px 24px; border-radius: 3px; cursor: pointer; transition: opacity 0.15s; }
   .btn-save:hover { opacity: 0.85; }
-  .btn-save:disabled { opacity: 0.4; cursor: not-allowed; }
-
-  .btn-cancel {
-    background: transparent;
-    color: var(--dim);
-    border: 1px solid var(--border-hi);
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    padding: 10px 20px;
-    border-radius: 3px;
-    cursor: pointer;
-    transition: all 0.15s;
-  }
+  .btn-cancel { background: transparent; color: var(--dim); border: 1px solid var(--border-hi); font-family: 'DM Mono', monospace; font-size: 12px; padding: 10px 20px; border-radius: 3px; cursor: pointer; transition: all 0.15s; }
   .btn-cancel:hover { border-color: var(--text); color: var(--text); }
 
-  /* ── ADD NEW MODAL ── */
-  .modal-overlay {
-    display: none;
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,0.7);
-    z-index: 200;
-    align-items: center;
-    justify-content: center;
-  }
+  /* MODAL */
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 200; align-items: center; justify-content: center; }
   .modal-overlay.open { display: flex; }
+  .modal { background: var(--surface); border: 1px solid var(--border-hi); border-radius: 4px; padding: 28px; width: 480px; max-width: 95vw; }
+  .modal h2 { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 20px; }
 
-  .modal {
-    background: var(--surface);
-    border: 1px solid var(--border-hi);
-    border-radius: 4px;
-    padding: 28px;
-    width: 480px;
-    max-width: 95vw;
-  }
-  .modal h2 {
-    font-family: 'Syne', sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 20px;
-  }
-
-  /* ── TOAST ── */
-  #toast {
-    position: fixed;
-    bottom: 24px; right: 24px;
-    background: #1a2230;
-    border: 1px solid var(--border-hi);
-    border-left: 3px solid var(--accent);
-    color: var(--text);
-    padding: 12px 18px;
-    border-radius: 3px;
-    font-size: 12px;
-    z-index: 300;
-    opacity: 0;
-    transform: translateY(8px);
-    transition: all 0.2s;
-    pointer-events: none;
-  }
+  /* TOAST */
+  #toast { position: fixed; bottom: 24px; right: 24px; background: #1a2230; border: 1px solid var(--border-hi); border-left: 3px solid var(--accent); color: var(--text); padding: 12px 18px; border-radius: 3px; font-size: 12px; z-index: 300; opacity: 0; transform: translateY(8px); transition: all 0.2s; pointer-events: none; }
   #toast.show { opacity: 1; transform: translateY(0); }
 
-  /* ── SETUP SCREEN ── */
-  #setup-screen {
-    display: none;
-    position: fixed; inset: 0;
-    background: var(--bg);
-    z-index: 400;
-    align-items: center;
-    justify-content: center;
-  }
+  /* SETUP SCREEN */
+  #setup-screen { display: none; position: fixed; inset: 0; background: var(--bg); z-index: 400; align-items: center; justify-content: center; }
   #setup-screen.open { display: flex; }
-
-  .setup-box {
-    background: var(--surface);
-    border: 1px solid var(--border-hi);
-    border-radius: 4px;
-    padding: 36px;
-    width: 520px;
-    max-width: 95vw;
-  }
-  .setup-box h2 {
-    font-family: 'Syne', sans-serif;
-    font-size: 18px;
-    font-weight: 800;
-    color: #fff;
-    margin-bottom: 6px;
-  }
-  .setup-box p {
-    font-size: 12px;
-    color: var(--dim);
-    margin-bottom: 24px;
-    line-height: 1.6;
-  }
+  .setup-box { background: var(--surface); border: 1px solid var(--border-hi); border-radius: 4px; padding: 36px; width: 540px; max-width: 95vw; }
+  .setup-box h2 { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 6px; }
+  .setup-box p { font-size: 12px; color: var(--dim); margin-bottom: 24px; line-height: 1.6; }
   .setup-box .form-group { margin-bottom: 16px; }
-  .setup-note {
-    font-size: 11px;
-    color: var(--dim);
-    margin-top: 16px;
-    padding: 12px;
-    border: 1px solid var(--border);
-    border-radius: 3px;
-    line-height: 1.6;
-  }
-  .setup-note code {
-    background: var(--border);
-    padding: 1px 5px;
-    border-radius: 2px;
-    font-size: 11px;
-    color: var(--accent);
-  }
+  .setup-note { font-size: 11px; color: var(--dim); margin-top: 16px; padding: 12px; border: 1px solid var(--border); border-radius: 3px; line-height: 1.8; }
+  .setup-note code { background: var(--border); padding: 1px 5px; border-radius: 2px; font-size: 11px; color: var(--accent); word-break: break-all; }
 
   /* PIN */
-  #pin-screen {
-    display: none;
-    position: fixed; inset: 0;
-    background: var(--bg);
-    z-index: 500;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 24px;
-  }
+  #pin-screen { display: none; position: fixed; inset: 0; background: var(--bg); z-index: 500; align-items: center; justify-content: center; }
   #pin-screen.open { display: flex; }
-  .pin-box {
-    background: var(--surface);
-    border: 1px solid var(--border-hi);
-    border-radius: 4px;
-    padding: 36px;
-    width: 360px;
-    text-align: center;
-  }
-  .pin-box h2 {
-    font-family: 'Syne', sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 4px;
-  }
+  .pin-box { background: var(--surface); border: 1px solid var(--border-hi); border-radius: 4px; padding: 36px; width: 360px; text-align: center; }
+  .pin-box h2 { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 4px; }
   .pin-box p { font-size: 11px; color: var(--dim); margin-bottom: 20px; }
-  .pin-input {
-    width: 100%;
-    text-align: center;
-    letter-spacing: 0.3em;
-    font-size: 22px;
-    margin-bottom: 14px;
-  }
+  .pin-input { width: 100%; text-align: center; letter-spacing: 0.3em; font-size: 22px; margin-bottom: 14px; }
   .pin-error { color: var(--hosp); font-size: 11px; margin-top: 8px; min-height: 16px; }
 
-  /* table header in list */
-  .list-col-header {
-    display: flex;
-    padding: 6px 16px;
-    border-bottom: 1px solid var(--border);
-    background: #0d1015;
-  }
+  .list-col-header { display: flex; padding: 6px 16px; border-bottom: 1px solid var(--border); background: #0d1015; }
   .lch { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); }
   .lch-id { width: 56px; margin-right: 12px; }
   .lch-rest { flex: 1; }
@@ -537,43 +150,38 @@
     <h2>COMMAND POST ACCESS</h2>
     <p>NDP 2026 · Ambulance Tracker<br>Restricted, Sensitive (Normal)</p>
     <input type="password" class="pin-input" id="pin-input" placeholder="····" maxlength="6">
-    <div>
-      <button class="btn-save" onclick="checkPin()" style="width:100%;">AUTHENTICATE</button>
-    </div>
+    <button class="btn-save" onclick="checkPin()" style="width:100%;">AUTHENTICATE</button>
     <div class="pin-error" id="pin-error"></div>
   </div>
 </div>
 
-<!-- SUPABASE SETUP SCREEN -->
+<!-- FIREBASE SETUP SCREEN -->
 <div id="setup-screen">
   <div class="setup-box">
-    <h2>Connect Supabase</h2>
-    <p>Enter your existing NDP 2026 Supabase project credentials. This shares the same backend as CASREP and Opslog.</p>
+    <h2>Connect Firebase</h2>
+    <p>Enter your NDP 2026 Firebase project credentials (same project as the Readiness Dashboard).</p>
     <div class="form-group">
-      <label>Supabase Project URL</label>
-      <input type="text" id="sb-url" placeholder="https://xxxxxxxxxxxx.supabase.co">
+      <label>Firebase API Key</label>
+      <input type="text" id="fb-apikey" placeholder="AIzaSy...">
     </div>
     <div class="form-group">
-      <label>Supabase Anon Key</label>
-      <input type="text" id="sb-key" placeholder="eyJhbGci...">
+      <label>Firebase Database URL</label>
+      <input type="text" id="fb-dburl" placeholder="https://your-project-default-rtdb.asia-southeast1.firebasedatabase.app">
+    </div>
+    <div class="form-group">
+      <label>Firebase Project ID</label>
+      <input type="text" id="fb-projectid" placeholder="your-project-id">
     </div>
     <div class="form-group">
       <label>Command Post PIN (4–6 digits)</label>
-      <input type="text" id="sb-pin" placeholder="e.g. 2026" maxlength="6">
+      <input type="text" id="fb-pin" placeholder="e.g. 2026" maxlength="6">
     </div>
-    <button class="btn-save" onclick="saveConfig()" style="margin-top:16px;">SAVE & CONNECT</button>
+    <button class="btn-save" onclick="saveConfig()" style="margin-top:8px;">SAVE & CONNECT</button>
     <div class="setup-note">
-      Run this SQL in your Supabase SQL Editor to create the table:<br><br>
-      <code>CREATE TABLE ambulances (
-  id TEXT PRIMARY KEY,
-  location TEXT,
-  status TEXT DEFAULT 'AVAILABLE',
-  patient_on_board BOOLEAN DEFAULT false,
-  destination TEXT,
-  notes TEXT,
-  updated_at TIMESTAMPTZ DEFAULT NOW()
-);</code><br><br>
-      Then enable Realtime on the <code>ambulances</code> table under Database → Replication.
+      Where to find these in Firebase Console → your NDP project:<br>
+      ⚙ <strong>Project Settings → General → Your apps → Firebase SDK snippet (Config)</strong><br><br>
+      Also ensure <strong>Realtime Database</strong> is enabled and rules allow read/write:<br>
+      <code>{ "rules": { ".read": true, ".write": true } }</code>
     </div>
   </div>
 </div>
@@ -595,43 +203,16 @@
   </div>
 </header>
 
-<!-- SUMMARY BAR -->
 <div class="summary-bar">
-  <div class="stat-pill s-total">
-    <div>
-      <div class="stat-count" id="cnt-total">0</div>
-      <div class="stat-label">Total<br>Amb</div>
-    </div>
-  </div>
-  <div class="stat-pill s-avail">
-    <div>
-      <div class="stat-count" id="cnt-avail">0</div>
-      <div class="stat-label">Available</div>
-    </div>
-  </div>
-  <div class="stat-pill s-deploy">
-    <div>
-      <div class="stat-count" id="cnt-deploy">0</div>
-      <div class="stat-label">Deployed</div>
-    </div>
-  </div>
-  <div class="stat-pill s-hosp">
-    <div>
-      <div class="stat-count" id="cnt-hosp">0</div>
-      <div class="stat-label">At Hospital</div>
-    </div>
-  </div>
-  <div class="stat-pill s-rtb">
-    <div>
-      <div class="stat-count" id="cnt-rtb">0</div>
-      <div class="stat-label">RTB</div>
-    </div>
-  </div>
+  <div class="stat-pill s-total"><div><div class="stat-count" id="cnt-total">0</div><div class="stat-label">Total<br>Amb</div></div></div>
+  <div class="stat-pill s-avail"><div><div class="stat-count" id="cnt-avail">0</div><div class="stat-label">Available</div></div></div>
+  <div class="stat-pill s-deploy"><div><div class="stat-count" id="cnt-deploy">0</div><div class="stat-label">Deployed</div></div></div>
+  <div class="stat-pill s-hosp"><div><div class="stat-count" id="cnt-hosp">0</div><div class="stat-label">At Hospital</div></div></div>
+  <div class="stat-pill s-rtb"><div><div class="stat-count" id="cnt-rtb">0</div><div class="stat-label">RTB</div></div></div>
 </div>
 
-<!-- MAIN -->
 <div class="main">
-  <!-- LEFT: LIST -->
+  <!-- LEFT -->
   <div class="panel-left">
     <div class="panel-header">
       <span class="panel-title">All Ambulances</span>
@@ -648,15 +229,15 @@
       <span class="lch lch-rest">Location · Status · POB</span>
     </div>
     <div class="amb-list" id="amb-list">
-      <div style="padding:32px 16px;color:var(--dim);text-align:center;font-size:12px;">Loading ambulance data…</div>
+      <div style="padding:32px 16px;color:var(--dim);text-align:center;font-size:12px;">Connecting…</div>
     </div>
   </div>
 
-  <!-- RIGHT: DETAIL -->
+  <!-- RIGHT -->
   <div class="panel-right">
     <div class="detail-pane" id="detail-pane">
       <div class="detail-empty" id="detail-empty">
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" style="opacity:0.2">
           <rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
         </svg>
         <p>SELECT AN AMBULANCE TO UPDATE</p>
@@ -678,16 +259,10 @@
       <label>Assigned Post / Starting Location</label>
       <select id="new-amb-loc">
         <option value="">— select post —</option>
-        <option>MP North</option>
-        <option>MP South</option>
-        <option>MP Arena</option>
-        <option>MP WACA</option>
-        <option>MP VVIP</option>
-        <option>FAP(E) Show</option>
-        <option>FAP(E) Beneficiaries</option>
-        <option>FAP(E) Celebrations</option>
-        <option>Staging Area</option>
-        <option>En Route</option>
+        <option>MP North</option><option>MP South</option><option>MP Arena</option>
+        <option>MP WACA</option><option>MP VVIP</option>
+        <option>FAP(E) Show</option><option>FAP(E) Beneficiaries</option><option>FAP(E) Celebrations</option>
+        <option>Staging Area</option><option>En Route</option>
       </select>
     </div>
     <div class="form-actions">
@@ -697,334 +272,279 @@
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-// ── CONFIG ──
-const PIN_HASH_KEY  = 'ndp_amb_pin_hash';
-const SB_URL_KEY    = 'ndp_amb_sb_url';
-const SB_KEY_KEY    = 'ndp_amb_sb_key';
+<!-- Firebase SDKs -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getDatabase, ref, onValue, set, remove, push } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-let sbClient = null;
-let ambulances = [];
-let selectedId = null;
-let filterStatus = 'ALL';
-let realtimeChannel = null;
+  // ── CONSTANTS ──
+  const PIN_HASH_KEY   = 'ndp_amb_pin_hash';
+  const FB_CFG_KEY     = 'ndp_amb_fb_cfg';
 
-const POSTS = [
-  'MP North','MP South','MP Arena','MP WACA','MP VVIP',
-  'FAP(E) Show','FAP(E) Beneficiaries','FAP(E) Celebrations',
-  'Staging Area','En Route'
-];
+  let db = null;
+  let ambulances = [];
+  let selectedId = null;
+  let filterStatus = 'ALL';
 
-const HOSPITALS = [
-  'SGH','CGH','TTSH','NUH','KKH','SNEC',
-  'IMH','SKH','AH','NTFGH','KTPH','WH','ALEXANDRAH'
-];
+  const POSTS = ['MP North','MP South','MP Arena','MP WACA','MP VVIP','FAP(E) Show','FAP(E) Beneficiaries','FAP(E) Celebrations','Staging Area','En Route'];
+  const HOSPITALS = ['SGH','CGH','TTSH','NUH','KKH','SNEC','IMH','SKH','AH','NTFGH','KTPH','WH','Alexandra H'];
+  const STATUSES = [{val:'AVAILABLE',label:'Available'},{val:'DEPLOYED',label:'Deployed'},{val:'AT_HOSP',label:'At Hospital'},{val:'RTB',label:'RTB'}];
 
-const STATUSES = [
-  { val:'AVAILABLE', label:'Available' },
-  { val:'DEPLOYED',  label:'Deployed' },
-  { val:'AT_HOSP',   label:'At Hospital' },
-  { val:'RTB',       label:'RTB' }
-];
+  // ── CLOCK ──
+  function tickClock() {
+    document.getElementById('clock').textContent = new Date().toLocaleTimeString('en-SG',{hour12:false});
+  }
+  setInterval(tickClock,1000); tickClock();
 
-// ── CLOCK ──
-function tickClock() {
-  const now = new Date();
-  document.getElementById('clock').textContent =
-    now.toLocaleTimeString('en-SG', { hour12: false });
-}
-setInterval(tickClock, 1000); tickClock();
+  // ── SHA-256 ──
+  async function sha256(str) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  }
 
-// ── SHA-256 ──
-async function sha256(str) {
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
-  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
-}
+  // ── PIN ──
+  window.checkPin = async function() {
+    const pin = document.getElementById('pin-input').value.trim();
+    if (!pin) return;
+    const hash = await sha256(pin);
+    const stored = localStorage.getItem(PIN_HASH_KEY);
+    if (!stored) {
+      localStorage.setItem(PIN_HASH_KEY, hash);
+      document.getElementById('pin-screen').classList.remove('open');
+      initApp();
+    } else if (hash === stored) {
+      document.getElementById('pin-screen').classList.remove('open');
+      initApp();
+    } else {
+      document.getElementById('pin-error').textContent = 'Incorrect PIN.';
+      document.getElementById('pin-input').value = '';
+    }
+  };
+  document.getElementById('pin-input').addEventListener('keydown', e => { if(e.key==='Enter') window.checkPin(); });
 
-// ── PIN ──
-async function checkPin() {
-  const pin = document.getElementById('pin-input').value.trim();
-  if (!pin) return;
-  const hash = await sha256(pin);
-  const stored = localStorage.getItem(PIN_HASH_KEY);
-
-  if (!stored) {
-    // First time — set pin
+  // ── CONFIG ──
+  window.saveConfig = async function() {
+    const apiKey    = document.getElementById('fb-apikey').value.trim();
+    const dbURL     = document.getElementById('fb-dburl').value.trim();
+    const projectId = document.getElementById('fb-projectid').value.trim();
+    const pin       = document.getElementById('fb-pin').value.trim();
+    if (!apiKey || !dbURL || !projectId || !pin) { showToast('All fields required.'); return; }
+    const cfg = { apiKey, databaseURL: dbURL, projectId };
+    localStorage.setItem(FB_CFG_KEY, JSON.stringify(cfg));
+    const hash = await sha256(pin);
     localStorage.setItem(PIN_HASH_KEY, hash);
-    document.getElementById('pin-screen').classList.remove('open');
-    initApp();
-  } else if (hash === stored) {
-    document.getElementById('pin-screen').classList.remove('open');
-    initApp();
-  } else {
-    document.getElementById('pin-error').textContent = 'Incorrect PIN.';
-    document.getElementById('pin-input').value = '';
-  }
-}
+    document.getElementById('setup-screen').classList.remove('open');
+    connectFirebase(cfg);
+  };
 
-document.getElementById('pin-input').addEventListener('keydown', e => {
-  if (e.key === 'Enter') checkPin();
-});
+  window.clearConfig = function() {
+    if (!confirm('Reset Firebase connection?')) return;
+    localStorage.removeItem(FB_CFG_KEY);
+    location.reload();
+  };
 
-// ── CONFIG ──
-function saveConfig() {
-  const url = document.getElementById('sb-url').value.trim();
-  const key = document.getElementById('sb-key').value.trim();
-  const pin = document.getElementById('sb-pin').value.trim();
-  if (!url || !key || !pin) { showToast('All fields required.'); return; }
-  localStorage.setItem(SB_URL_KEY, url);
-  localStorage.setItem(SB_KEY_KEY, key);
-  document.getElementById('setup-screen').classList.remove('open');
-  // store pin hash
-  sha256(pin).then(h => { localStorage.setItem(PIN_HASH_KEY, h); });
-  connectSupabase(url, key);
-}
-
-function clearConfig() {
-  if (!confirm('Reset Supabase connection?')) return;
-  localStorage.removeItem(SB_URL_KEY);
-  localStorage.removeItem(SB_KEY_KEY);
-  location.reload();
-}
-
-// ── INIT ──
-function initApp() {
-  const url = localStorage.getItem(SB_URL_KEY);
-  const key = localStorage.getItem(SB_KEY_KEY);
-  if (!url || !key) {
-    document.getElementById('setup-screen').classList.add('open');
-    return;
-  }
-  connectSupabase(url, key);
-}
-
-function connectSupabase(url, key) {
-  sbClient = window.supabase.createClient(url, key);
-  fetchAmbulances();
-  subscribeRealtime();
-}
-
-// ── DATA ──
-async function fetchAmbulances() {
-  const { data, error } = await sbClient
-    .from('ambulances')
-    .select('*')
-    .order('id');
-  if (error) { showToast('Error loading data: ' + error.message); return; }
-  ambulances = data || [];
-  renderList();
-  updateSummary();
-}
-
-function subscribeRealtime() {
-  if (realtimeChannel) sbClient.removeChannel(realtimeChannel);
-  realtimeChannel = sbClient
-    .channel('ambulances-changes')
-    .on('postgres_changes', { event: '*', schema: 'public', table: 'ambulances' }, () => {
-      fetchAmbulances();
-    })
-    .subscribe();
-}
-
-// ── FILTER ──
-function setFilter(btn) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  filterStatus = btn.dataset.filter;
-  renderList();
-}
-
-// ── RENDER LIST ──
-function renderList() {
-  const list = document.getElementById('amb-list');
-  const filtered = filterStatus === 'ALL'
-    ? ambulances
-    : ambulances.filter(a => a.status === filterStatus);
-
-  if (!filtered.length) {
-    list.innerHTML = `<div style="padding:32px 16px;color:var(--dim);text-align:center;font-size:12px;">No ambulances${filterStatus !== 'ALL' ? ' with status ' + filterStatus : ''}.</div>`;
-    return;
+  // ── INIT ──
+  function initApp() {
+    const raw = localStorage.getItem(FB_CFG_KEY);
+    if (!raw) { document.getElementById('setup-screen').classList.add('open'); return; }
+    connectFirebase(JSON.parse(raw));
   }
 
-  list.innerHTML = filtered.map(a => {
-    const ts = a.updated_at ? new Date(a.updated_at).toLocaleTimeString('en-SG',{hour12:false}) : '--';
-    const pobLabel = a.patient_on_board ? '🔴 POB' : '<span class="amb-pob none">no POB</span>';
-    const dest = a.destination && a.status !== 'AVAILABLE' ? `→ ${a.destination}` : '';
-    return `
-    <div class="amb-card${selectedId === a.id ? ' selected' : ''}" onclick="selectAmb('${a.id}')">
-      <div class="amb-id">${a.id}</div>
-      <div class="amb-details">
-        <div class="amb-location">${a.location || '—'} ${dest ? '<span style="color:var(--dim)">'+dest+'</span>' : ''}</div>
-        <div class="amb-meta">
-          <span class="status-chip chip-${a.status}">${statusLabel(a.status)}</span>
-          ${a.patient_on_board ? '<span class="amb-pob">🔴 POB</span>' : '<span class="amb-pob none">no POB</span>'}
+  function connectFirebase(cfg) {
+    const app = initializeApp(cfg);
+    db = getDatabase(app);
+    subscribeRealtime();
+  }
+
+  // ── REALTIME ──
+  function subscribeRealtime() {
+    const ambRef = ref(db, 'ambulances');
+    onValue(ambRef, snapshot => {
+      const data = snapshot.val() || {};
+      ambulances = Object.entries(data).map(([id, v]) => ({ id, ...v }))
+        .sort((a,b) => a.id.localeCompare(b.id));
+      renderList();
+      updateSummary();
+      // refresh edit form if open
+      if (selectedId) {
+        const amb = ambulances.find(a => a.id === selectedId);
+        if (amb) showEditForm(amb); else clearSelection();
+      }
+    });
+  }
+
+  // ── FILTER ──
+  window.setFilter = function(btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    filterStatus = btn.dataset.filter;
+    renderList();
+  };
+
+  // ── RENDER LIST ──
+  function renderList() {
+    const list = document.getElementById('amb-list');
+    const filtered = filterStatus === 'ALL' ? ambulances : ambulances.filter(a => a.status === filterStatus);
+    if (!filtered.length) {
+      list.innerHTML = `<div style="padding:32px 16px;color:var(--dim);text-align:center;font-size:12px;">No ambulances${filterStatus!=='ALL'?' with status '+filterStatus:''}.</div>`;
+      return;
+    }
+    list.innerHTML = filtered.map(a => {
+      const ts = a.updated_at ? new Date(a.updated_at).toLocaleTimeString('en-SG',{hour12:false}) : '--';
+      const dest = (a.destination && a.status !== 'AVAILABLE') ? `<span style="color:var(--dim)"> → ${a.destination}</span>` : '';
+      return `
+      <div class="amb-card${selectedId===a.id?' selected':''}" onclick="selectAmb('${a.id}')">
+        <div class="amb-id">${a.id}</div>
+        <div class="amb-details">
+          <div class="amb-location">${a.location||'—'}${dest}</div>
+          <div class="amb-meta">
+            <span class="status-chip chip-${a.status}">${statusLabel(a.status)}</span>
+            ${a.patient_on_board ? '<span class="amb-pob">🔴 POB</span>' : '<span class="amb-pob none">no POB</span>'}
+          </div>
+        </div>
+        <div class="amb-ts">${ts}</div>
+      </div>`;
+    }).join('');
+  }
+
+  function statusLabel(s) {
+    return {AVAILABLE:'Available',DEPLOYED:'Deployed',AT_HOSP:'At Hospital',RTB:'RTB'}[s]||s;
+  }
+
+  // ── SUMMARY ──
+  function updateSummary() {
+    document.getElementById('cnt-total').textContent  = ambulances.length;
+    document.getElementById('cnt-avail').textContent  = ambulances.filter(a=>a.status==='AVAILABLE').length;
+    document.getElementById('cnt-deploy').textContent = ambulances.filter(a=>a.status==='DEPLOYED').length;
+    document.getElementById('cnt-hosp').textContent   = ambulances.filter(a=>a.status==='AT_HOSP').length;
+    document.getElementById('cnt-rtb').textContent    = ambulances.filter(a=>a.status==='RTB').length;
+  }
+
+  // ── SELECT ──
+  window.selectAmb = function(id) {
+    selectedId = id;
+    renderList();
+    const amb = ambulances.find(a => a.id === id);
+    if (amb) showEditForm(amb);
+  };
+
+  function showEditForm(amb) {
+    document.getElementById('detail-empty').style.display = 'none';
+    document.getElementById('edit-form-container').style.display = 'block';
+
+    const statusOpts = STATUSES.map(s => `<option value="${s.val}"${amb.status===s.val?' selected':''}>${s.label}</option>`).join('');
+    const postOpts   = POSTS.map(p => `<option value="${p}"${amb.location===p?' selected':''}>${p}</option>`).join('');
+    const hospOpts   = HOSPITALS.map(h => `<option value="${h}"${amb.destination===h?' selected':''}>${h}</option>`).join('');
+    const pobYes = amb.patient_on_board ? 'yes active' : 'yes';
+    const pobNo  = !amb.patient_on_board ? 'no active' : 'no';
+
+    document.getElementById('edit-form-container').innerHTML = `
+    <div class="edit-form">
+      <div class="form-heading">${amb.id}</div>
+      <div class="form-sub">Last updated: ${amb.updated_at ? new Date(amb.updated_at).toLocaleString('en-SG',{hour12:false}) : '—'}</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Current Status</label>
+          <select id="f-status">${statusOpts}</select>
+        </div>
+        <div class="form-group">
+          <label>Current Location / Post</label>
+          <select id="f-location">
+            <option value="">— select —</option>${postOpts}
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Patient on Board</label>
+          <div class="pob-toggle">
+            <button class="pob-btn ${pobYes}" onclick="setPob(true)">🔴 YES — POB</button>
+            <button class="pob-btn ${pobNo}"  onclick="setPob(false)">✓ NO POB</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Destination Hospital</label>
+          <select id="f-dest">
+            <option value="">— none / N/A —</option>${hospOpts}
+          </select>
+        </div>
+        <div class="form-group full">
+          <label>Notes (optional)</label>
+          <input type="text" id="f-notes" value="${amb.notes||''}" placeholder="e.g. crew change, mechanical issue…">
         </div>
       </div>
-      <div class="amb-ts">${ts}</div>
+      <div class="form-actions">
+        <button class="btn-save" onclick="saveAmb('${amb.id}')">SAVE UPDATE</button>
+        <button class="btn-cancel" onclick="clearSelection()">Cancel</button>
+        <button class="btn-cancel" onclick="confirmDelete('${amb.id}')" style="margin-left:auto;color:var(--hosp);border-color:#2a0a0a;">Remove</button>
+      </div>
     </div>`;
-  }).join('');
-}
+  }
 
-function statusLabel(s) {
-  return { AVAILABLE:'Available', DEPLOYED:'Deployed', AT_HOSP:'At Hospital', RTB:'RTB' }[s] || s;
-}
+  window.setPob = function(val) {
+    document.querySelectorAll('.pob-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector(`.pob-btn.${val?'yes':'no'}`).classList.add('active');
+  };
 
-// ── SUMMARY ──
-function updateSummary() {
-  document.getElementById('cnt-total').textContent  = ambulances.length;
-  document.getElementById('cnt-avail').textContent  = ambulances.filter(a=>a.status==='AVAILABLE').length;
-  document.getElementById('cnt-deploy').textContent = ambulances.filter(a=>a.status==='DEPLOYED').length;
-  document.getElementById('cnt-hosp').textContent   = ambulances.filter(a=>a.status==='AT_HOSP').length;
-  document.getElementById('cnt-rtb').textContent    = ambulances.filter(a=>a.status==='RTB').length;
-}
+  function readPob() {
+    return document.querySelector('.pob-btn.yes.active') !== null;
+  }
 
-// ── SELECT ──
-function selectAmb(id) {
-  selectedId = id;
-  renderList();
-  const amb = ambulances.find(a => a.id === id);
-  if (!amb) return;
-  showEditForm(amb);
-}
+  window.saveAmb = async function(id) {
+    const status           = document.getElementById('f-status').value;
+    const location         = document.getElementById('f-location').value;
+    const destination      = document.getElementById('f-dest').value;
+    const notes            = document.getElementById('f-notes').value.trim();
+    const patient_on_board = readPob();
 
-function showEditForm(amb) {
-  document.getElementById('detail-empty').style.display = 'none';
-  document.getElementById('edit-form-container').style.display = 'block';
+    const safeId = id.replace(/[.#$[\]]/g, '_');
+    await set(ref(db, `ambulances/${safeId}`), {
+      id, status, location, destination, notes, patient_on_board,
+      updated_at: new Date().toISOString()
+    });
+    showToast(`${id} updated — ${statusLabel(status)}`);
+  };
 
-  const pobYes = amb.patient_on_board ? 'yes active' : 'yes';
-  const pobNo  = !amb.patient_on_board ? 'no active' : 'no';
+  window.clearSelection = function() {
+    selectedId = null;
+    document.getElementById('detail-empty').style.display = 'flex';
+    document.getElementById('edit-form-container').style.display = 'none';
+    renderList();
+  };
 
-  const statusOpts = STATUSES.map(s =>
-    `<option value="${s.val}"${amb.status===s.val?' selected':''}>${s.label}</option>`
-  ).join('');
+  window.confirmDelete = async function(id) {
+    if (!confirm(`Remove ${id} from tracker?`)) return;
+    const safeId = id.replace(/[.#$[\]]/g, '_');
+    await remove(ref(db, `ambulances/${safeId}`));
+    showToast(`${id} removed.`);
+    window.clearSelection();
+  };
 
-  const postOpts = POSTS.map(p =>
-    `<option value="${p}"${amb.location===p?' selected':''}>${p}</option>`
-  ).join('');
+  // ── ADD ──
+  window.openAddModal  = function() { document.getElementById('add-modal').classList.add('open'); };
+  window.closeAddModal = function() { document.getElementById('add-modal').classList.remove('open'); };
 
-  const hospOpts = HOSPITALS.map(h =>
-    `<option value="${h}"${amb.destination===h?' selected':''}>${h}</option>`
-  ).join('');
+  window.addAmbulance = async function() {
+    const id  = document.getElementById('new-amb-id').value.trim().toUpperCase();
+    const loc = document.getElementById('new-amb-loc').value;
+    if (!id) { showToast('Enter an ambulance ID.'); return; }
+    if (ambulances.find(a => a.id === id)) { showToast(`${id} already exists.`); return; }
+    const safeId = id.replace(/[.#$[\]]/g, '_');
+    await set(ref(db, `ambulances/${safeId}`), {
+      id, location: loc, status: 'AVAILABLE',
+      patient_on_board: false, destination: '', notes: '',
+      updated_at: new Date().toISOString()
+    });
+    showToast(`${id} registered.`);
+    document.getElementById('new-amb-id').value = '';
+    window.closeAddModal();
+  };
 
-  document.getElementById('edit-form-container').innerHTML = `
-  <div class="edit-form">
-    <div class="form-heading">${amb.id}</div>
-    <div class="form-sub">Last updated: ${amb.updated_at ? new Date(amb.updated_at).toLocaleString('en-SG',{hour12:false}) : '—'}</div>
-
-    <div class="form-grid">
-      <div class="form-group">
-        <label>Current Status</label>
-        <select id="f-status">${statusOpts}</select>
-      </div>
-      <div class="form-group">
-        <label>Current Location / Post</label>
-        <select id="f-location">
-          <option value="">— select —</option>
-          ${postOpts}
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Patient on Board</label>
-        <div class="pob-toggle">
-          <button class="pob-btn ${pobYes}" onclick="setPob(true)">🔴 YES — POB</button>
-          <button class="pob-btn ${pobNo}"  onclick="setPob(false)">✓ NO POB</button>
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Destination Hospital</label>
-        <select id="f-dest">
-          <option value="">— none / N/A —</option>
-          ${hospOpts}
-        </select>
-      </div>
-      <div class="form-group full">
-        <label>Notes (optional)</label>
-        <input type="text" id="f-notes" value="${amb.notes || ''}" placeholder="e.g. crew change, mechanical issue…">
-      </div>
-    </div>
-    <div class="form-actions">
-      <button class="btn-save" onclick="saveAmb('${amb.id}')">SAVE UPDATE</button>
-      <button class="btn-cancel" onclick="clearSelection()">Cancel</button>
-      <button class="btn-cancel" onclick="confirmDelete('${amb.id}')" style="margin-left:auto;color:var(--hosp);border-color:var(--hosp-bg);">Remove</button>
-    </div>
-  </div>`;
-}
-
-let pobValue = false;
-function setPob(val) {
-  pobValue = val;
-  document.querySelectorAll('.pob-btn').forEach(b => b.classList.remove('active'));
-  document.querySelector(`.pob-btn.${val?'yes':'no'}`).classList.add('active');
-}
-
-// read pob from buttons
-function readPob() {
-  return document.querySelector('.pob-btn.yes.active') !== null;
-}
-
-async function saveAmb(id) {
-  const status  = document.getElementById('f-status').value;
-  const location = document.getElementById('f-location').value;
-  const destination = document.getElementById('f-dest').value;
-  const notes   = document.getElementById('f-notes').value.trim();
-  const patient_on_board = readPob();
-
-  const { error } = await sbClient
-    .from('ambulances')
-    .update({ status, location, destination, notes, patient_on_board, updated_at: new Date().toISOString() })
-    .eq('id', id);
-
-  if (error) { showToast('Save failed: ' + error.message); return; }
-  showToast(`${id} updated — ${statusLabel(status)}`);
-  fetchAmbulances();
-}
-
-function clearSelection() {
-  selectedId = null;
-  document.getElementById('detail-empty').style.display = 'flex';
-  document.getElementById('edit-form-container').style.display = 'none';
-  renderList();
-}
-
-async function confirmDelete(id) {
-  if (!confirm(`Remove ${id} from tracker?`)) return;
-  const { error } = await sbClient.from('ambulances').delete().eq('id', id);
-  if (error) { showToast('Delete failed: ' + error.message); return; }
-  showToast(`${id} removed.`);
-  clearSelection();
-  fetchAmbulances();
-}
-
-// ── ADD ──
-function openAddModal() { document.getElementById('add-modal').classList.add('open'); }
-function closeAddModal() { document.getElementById('add-modal').classList.remove('open'); }
-
-async function addAmbulance() {
-  const id  = document.getElementById('new-amb-id').value.trim().toUpperCase();
-  const loc = document.getElementById('new-amb-loc').value;
-  if (!id) { showToast('Enter an ambulance ID.'); return; }
-  if (ambulances.find(a => a.id === id)) { showToast(`${id} already exists.`); return; }
-
-  const { error } = await sbClient.from('ambulances').insert([{
-    id, location: loc, status: 'AVAILABLE',
-    patient_on_board: false, destination: '', notes: '',
-    updated_at: new Date().toISOString()
-  }]);
-  if (error) { showToast('Error: ' + error.message); return; }
-  showToast(`${id} registered.`);
-  document.getElementById('new-amb-id').value = '';
-  closeAddModal();
-  fetchAmbulances();
-}
-
-// ── TOAST ──
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3000);
-}
+  // ── TOAST ──
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
 </script>
 </body>
 </html>
